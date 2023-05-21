@@ -1,7 +1,9 @@
 import { useState } from "react"
 import {useNavigate} from "react-router-dom"
+import { setUserInfo } from "../../slices/userSlice"
+import { connect } from "react-redux"
 
-const Login = () => {
+const Login = ({dispatch}) => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -16,7 +18,10 @@ const Login = () => {
             credentials: 'include',
         })
         if(response.ok) {
-            navigate('/')
+            response.json().then( userInfo => {
+                dispatch(setUserInfo(userInfo))
+                navigate('/')
+            })
         } else {
             alert('wrong credentials')
         }
@@ -42,4 +47,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default connect()(Login)

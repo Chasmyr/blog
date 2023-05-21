@@ -1,19 +1,17 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import "./style.css"
 import {Link} from "react-router-dom"
+import { connect } from "react-redux"
+import { setUserInfo } from "../../slices/userSlice"
 
-const Header = () => {
-
-    const [username, setUsername] = useState('')
+const Header = ({user = null, dispatch}) => {
 
     useEffect(() => {
         fetch('http://localhost:4000/profile', {
             credentials: 'include',
         }).then(response => {
             response.json().then(userInfo => {
-                // ajouter l'username au redux
-                console.log(userInfo)
-                setUsername(userInfo.username)
+                dispatch(setUserInfo(userInfo))
             })
         })
     }, [])
@@ -23,14 +21,14 @@ const Header = () => {
             credentials: 'include',
             method: 'POST',
         })
-        setUsername('')
+        dispatch(setUserInfo(null))
     }
 
     return (
         <header>
             <Link to="/" className="logo">MyBlog</Link>
             <nav>
-                {username.length > 1 ? (
+                {user !== null ? (
                     <>
                         <Link to="/create">Create new post</Link>
                         <a onClick={logout} >Logout</a>
@@ -48,4 +46,8 @@ const Header = () => {
     )
 }
 
-export default Header
+export default connect(
+    state => ({
+        user: state.userReducer.userInfo
+    })
+)(Header)
