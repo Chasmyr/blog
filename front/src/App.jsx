@@ -3,6 +3,7 @@ import Layout from "./pageLayout"
 import Home from "./pages/home"
 import Login from "./pages/login"
 import Register from "./pages/register"
+import CreatePost from "./pages/createPost"
 
 function App() {
   
@@ -13,6 +14,7 @@ function App() {
           <Route index element={<Home />} />
           <Route element={<Login />} path="/login"/>
           <Route element={<Register />} path="/register"/>
+          <Route element={<CreatePost />} path="/create" />
         </Route>
       </Routes>
     </BrowserRouter>

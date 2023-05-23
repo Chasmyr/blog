@@ -3,6 +3,6 @@ form.login, form.register {
     margin: 0 auto;
 }
 
-form h1 {
+form.login h1, from.register h1 {
     text-align: center;
 }
