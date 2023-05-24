@@ -20,6 +20,8 @@ const secretTokenKey = process.env.SECRET_TOKEN_KEY
 app.use(cors({credentials:true, origin:process.env.APP_URL}))
 app.use(express.json())
 app.use(cookieParser())
+// permettre la récupération des images dans le dossier /uplods
+app.use('/uploads', express.static(__dirname + '/uploads'))
 
 mongoose.connect(process.env.DATABASE_CONNECTION)
 
@@ -82,15 +84,33 @@ app.post('/post', upload.single('file'), async (req, res) => {
         fs.renameSync(path, newPath)
 
         //build the post
-        const {title, summary, content} = req.body
-        const postDoc = await Post.create({
-            title,
-            summary,
-            content,
-            cover: newPath
-        })
+        const {token} = req.cookies
+        jwt.verify(token, secretTokenKey, {}, async (err, info) => {
+            if (err) throw err
 
-        res.json(postDoc)
+            const {title, summary, content} = req.body
+            const postDoc = await Post.create({
+                title,
+                summary,
+                content,
+                cover: newPath,
+                author:info.id
+            })
+            res.json(postDoc)
+        })
+        
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+app.get('/post', async (req, res) => {
+    try {
+        res.json(await Post.find()
+        .populate('author', ['username'])
+        .sort({createdAt: -1})
+        .limit(20)
+        )
     } catch (err) {
         res.status(400).json(err)
     }

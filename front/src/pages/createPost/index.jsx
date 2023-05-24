@@ -45,7 +45,8 @@ const CreatePost = ({user = null}) => {
         e.preventDefault()
         const response = await fetch('http://localhost:4000/post', {
             method: 'POST',
-            body: data
+            body: data,
+            credentials: 'include'
         })
         
         if(response.ok) {
