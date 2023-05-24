@@ -22,15 +22,17 @@ div.post div.text a {
 }
 
 div.post p.info {
-    margin: 8px 0px;
+    margin: 0;
     color: #8a8a8a;
     font-size: 14px;
     font-weight: bold;
     display: flex;
-    gap: 10px;
+    gap: 20px;
+    display: flex;
+    align-items: center;
 }
 
-div.post p.info a.author {
+div.post p.info p.author {
     color: #494747;
     cursor: pointer;
 }
