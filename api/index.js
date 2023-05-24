@@ -116,5 +116,15 @@ app.get('/post', async (req, res) => {
     }
 })
 
+app.get('/post/:id', async (req, res) => {
+    const {id} = req.params
+    try {
+        const postDoc = await Post.findById(id).populate('author', ['username'])
+        res.json(postDoc)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
 const port = process.env.API_PORT || 4000
 app.listen(port)

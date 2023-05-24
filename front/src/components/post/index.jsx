@@ -1,19 +1,22 @@
+import { Link } from "react-router-dom"
 import "./style.css"
 import {format} from "date-fns"
 
 const Post = ({post}) => {
 
-    console.log(post)
-
     return (
         <div className="post">
             <div className="img">
-                <img src={'http://localhost:4000/'+post.cover} alt="img" />
+                <Link to={`/post/${post._id}`}>
+                    <img src={'http://localhost:4000/'+post.cover} alt="img" />
+                </Link>
             </div>
             <div className="text">
-                <h2>{post.title}</h2>
+                <Link to={`/post/${post._id}`}>
+                    <h2>{post.title}</h2>
+                </Link>
                 <p className="info">
-                    <a className="author">{post.author.username}</a>
+                    <p className="author">{post.author.username}</p>
                     <time>{format(new Date(post.createdAt), 'd MMM, yyyy HH:mm')}</time>
                 </p>
                 <p className="desc">{post.summary}</p>
