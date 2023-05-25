@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import {format} from "date-fns"
 import "./style.css"
 import { connect } from "react-redux"
@@ -8,11 +8,18 @@ const PostPage = ({user = null}) => {
 
     const {id} = useParams()
     const [postInfo, setPostInfo] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(`http://localhost:4000/post/${id}`)
         .then(response => response.json())
-        .then(data => setPostInfo(data))
+        .then(data => {
+            if(data?.message) {
+                navigate('/erreur')
+            } else {
+                setPostInfo(data)
+            } 
+        })
     }, [])
 
     return (

@@ -6,6 +6,7 @@ import Register from "./pages/register"
 import CreatePost from "./pages/createPost"
 import PostPage from "./pages/postPage"
 import EditPost from "./pages/editPost"
+import Error from "./pages/error"
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
           <Route element={<CreatePost />} path="/create" />
           <Route element={<PostPage />} path="/post/:id" />
           <Route element={<EditPost />} path="/edit/:id" />
+          <Route element={<Error />} path="*" />
         </Route>
       </Routes>
     </BrowserRouter>
