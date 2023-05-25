@@ -126,5 +126,44 @@ app.get('/post/:id', async (req, res) => {
     }
 })
 
+app.put('/post/:id', upload.single('file'), async (req, res) => {
+    try {
+        let newPath = null
+        if(req.file) {
+            // build the file to img format
+            const {originalname, path} = req.file
+            const parts = originalname.split('.')
+            const ext = parts[parts.length - 1]
+            newPath = path+'.'+ext
+            fs.renameSync(path, newPath)
+        }
+
+        const {token} = req.cookies
+        jwt.verify(token, secretTokenKey, {}, async (err, info) => {
+            if (err) throw err
+
+            const {title, summary, content, id} = req.body
+            const postDoc = await Post.findById(id)
+            const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id)
+            if(!isAuthor) {
+                return res.status(400).json('You are not the author')
+            }
+
+            await Post.findByIdAndUpdate(id, 
+            {
+                title,
+                content,
+                summary,
+                cover: newPath ? newPath : postDoc.cover
+            })
+
+            res.json(postDoc)
+        })
+
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
 const port = process.env.API_PORT || 4000
 app.listen(port)

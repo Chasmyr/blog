@@ -42,3 +42,18 @@ div.post-page p {
 div.post-page div.content p {
     line-height: 1.6rem;
 }
+
+div.edit-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+div.edit-container a.edit {
+    background-color: #333;
+    color: white;
+    display: inline-block;
+    text-decoration: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+}

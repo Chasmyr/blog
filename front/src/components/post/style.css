@@ -22,7 +22,7 @@ div.post div.text a {
 }
 
 div.post p.info {
-    margin: 0;
+    margin: 8px 0;
     color: #8a8a8a;
     font-size: 14px;
     font-weight: bold;
@@ -32,7 +32,7 @@ div.post p.info {
     align-items: center;
 }
 
-div.post p.info p.author {
+div.post p.info span.author {
     color: #494747;
     cursor: pointer;
 }

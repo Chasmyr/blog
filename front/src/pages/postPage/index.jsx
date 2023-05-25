@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import {format} from "date-fns"
 import "./style.css"
+import { connect } from "react-redux"
 
-const PostPage = () => {
+const PostPage = ({user = null}) => {
 
     const {id} = useParams()
     const [postInfo, setPostInfo] = useState(null)
@@ -21,6 +22,11 @@ const PostPage = () => {
                     <h1>{postInfo.title}</h1>
                     <time className="time">{format(new Date(postInfo.createdAt), 'd MMM, yyyy HH:mm')}</time>
                     <div className="author">by {postInfo.author.username}</div>
+                    {user.id === postInfo.author._id && (
+                        <div className="edit-container">
+                            <Link className="edit" to={`/edit/${postInfo._id}`}>Edit this post</Link>
+                        </div>
+                    )}
                     <div className="img">
                         <img src={`http://localhost:4000/${postInfo.cover}`} alt="post image" />
                     </div>
@@ -32,4 +38,8 @@ const PostPage = () => {
 
 }
 
-export default PostPage
+export default connect(
+    state => ({
+        user: state.userReducer.userInfo
+    })
+)(PostPage)

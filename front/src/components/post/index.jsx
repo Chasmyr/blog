@@ -16,7 +16,7 @@ const Post = ({post}) => {
                     <h2>{post.title}</h2>
                 </Link>
                 <p className="info">
-                    <p className="author">{post.author.username}</p>
+                    <span className="author">{post.author.username}</span>
                     <time>{format(new Date(post.createdAt), 'd MMM, yyyy HH:mm')}</time>
                 </p>
                 <p className="desc">{post.summary}</p>

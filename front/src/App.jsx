@@ -5,6 +5,7 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import CreatePost from "./pages/createPost"
 import PostPage from "./pages/postPage"
+import EditPost from "./pages/editPost"
 
 function App() {
   
@@ -17,6 +18,7 @@ function App() {
           <Route element={<Register />} path="/register"/>
           <Route element={<CreatePost />} path="/create" />
           <Route element={<PostPage />} path="/post/:id" />
+          <Route element={<EditPost />} path="/edit/:id" />
         </Route>
       </Routes>
     </BrowserRouter>
